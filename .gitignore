@@ -1,0 +1,6 @@
+# Dependency directories
+node_modules/
+
+# build output but not folder
+dist/*
+!.gitkeep
