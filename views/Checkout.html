@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Checkout</title>
+    <link rel ="stylesheet" type ="text/css" href ="./style.css" />
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <h1>M133 Dorfladen</h1>
+            <hr>
+        </header>
+        <content>
+            <span class="basket">
+                <button id="basketbtn">Warenkorb</button>
+            </span>
+            <form action="#" method="post">
+                <label for="firstname">Vorname</label>
+                <input type="text" name="firstname" placeholder="Vorname" pattern="^[^\d\s\W]*$" required/>
+                <br>
+                <label for="name">Nachname</label>
+                <input type="text" name="name" placeholder="Nachname" pattern="^[^\d\s\W]*$" required/>
+                <br>
+                <label for="e-mail">Email-Adresse</label>
+                <input type="email" name="e-mail" placeholder="Email-Adresse" required/>
+                <br>
+                <input type="submit" value="Einkauf abschliessen">
+            </form>
+        </content>
+        <footer>
+            <hr>
+            <p>&copy; 2019 BBZW M133, Levin Joller</p>
+        </footer>
+    </div>
+</body>
+</html>

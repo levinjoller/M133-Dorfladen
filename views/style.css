@@ -1,0 +1,41 @@
+
+.wrapper{
+    display: grid;
+    grid-template-columns: 2fr 6fr 2fr;
+	grid-template-rows: 100px 4fr 100px;
+    grid-template-areas: 
+	". header ."
+    ". content ."
+    ". footer .";
+    min-height: 100%;
+}
+
+html, body{
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+}
+
+header{
+	grid-area: header;
+    text-align: center;
+}
+
+content{
+	grid-area: content;
+}
+
+footer{
+	grid-area: footer;
+    text-align: center;
+}
+
+#basketbtn{
+    float: right;
+    margin: 10px;
+}
+
+.basket{
+    display: flow-root;
+    height: auto;
+}
