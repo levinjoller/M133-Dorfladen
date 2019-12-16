@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Checkout</title>
-    <link rel ="stylesheet" type ="text/css" href ="./style.css" />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
 </head>
+
 <body>
     <div class="wrapper">
         <header>
@@ -14,21 +16,23 @@
             <hr>
         </header>
         <content>
-            <span class="basket">
-                <button id="basketbtn">Warenkorb</button>
-            </span>
-            <form action="#" method="post">
-                <label for="firstname">Vorname</label>
-                <input type="text" name="firstname" placeholder="Vorname" pattern="^[^\d\s\W]*$" required/>
-                <br>
-                <label for="name">Nachname</label>
-                <input type="text" name="name" placeholder="Nachname" pattern="^[^\d\s\W]*$" required/>
-                <br>
-                <label for="e-mail">Email-Adresse</label>
-                <input type="email" name="e-mail" placeholder="Email-Adresse" required/>
-                <br>
-                <input type="submit" value="Einkauf abschliessen">
-            </form>
+            <div class="basket">
+                <button>Warenkorb</button>
+            </div>
+            <div class="shop">
+                <form action="#" method="post">
+                    <label for="firstname">Vorname</label>
+                    <input type="text" name="firstname" placeholder="Vorname" pattern="^[^\d\s\W]*$" required />
+                    <br>
+                    <label for="name">Nachname</label>
+                    <input type="text" name="name" placeholder="Nachname" pattern="^[^\d\s\W]*$" required />
+                    <br>
+                    <label for="e-mail">Email-Adresse</label>
+                    <input type="email" name="e-mail" placeholder="Email-Adresse" required />
+                    <br>
+                    <input type="submit" value="Einkauf abschliessen">
+                </form>
+            </div>
         </content>
         <footer>
             <hr>
@@ -36,4 +40,5 @@
         </footer>
     </div>
 </body>
+
 </html>

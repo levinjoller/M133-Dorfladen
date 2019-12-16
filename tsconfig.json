@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
-      "target": "es6",
-      "module": "commonjs",
-      "esModuleInterop": true,
-      "outDir": "dist",
-      "baseUrl": ".",
-      "paths": {
-        "*": [
-            "node_modules/*",
-        ]
-      }
+    "target": "es6",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "*": [
+        "node_modules/*",
+      ]
+    }
   },
   "include": [
     "src/**/*"

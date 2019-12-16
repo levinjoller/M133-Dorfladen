@@ -12,8 +12,12 @@ app.use(expressSession({
     saveUninitialized: true,
 }));
 
-app.get("/", (req,res) => {
-    res.sendFile(path.join(__dirname+'/../views/Checkout.html'));
+app.get("/", (req, res) => {
+    res.render("Index");
+});
+
+app.get("/Checkout", (req, res) => {
+    res.sendFile(path.join(__dirname + '/../views/Checkout.html'));
 });
 
 app.listen(port, () => {
