@@ -10,9 +10,15 @@ First all dependencies have to be installed:
 ```
 npm install
 ```
-Next the application can be configured as follows:
+Next the application can be started as follows:
 ```
-npm start
+npm start 
+```
+
+## Run unit-test
+To run all unit-tests, the following command must be executed in the console:
+```
+npm test
 ```
 
 ## VS Code

@@ -11,7 +11,8 @@
   },
   "scripts": {
     "prestart": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "test": "mocha -r ts-node/register test/**/ProductBasket.tests.ts"
   },
   "repository": {
     "type": "git",
@@ -24,8 +25,13 @@
   },
   "homepage": "https://github.com/Levinuk/M133-Dorfladen#readme",
   "devDependencies": {
+    "@types/chai": "^4.2.7",
     "@types/express": "^4.17.2",
-    "@types/express-session": "^1.15.16"
+    "@types/express-session": "^1.15.16",
+    "@types/mocha": "^5.2.7",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2",
+    "ts-node": "^8.5.4"
   },
   "optionalDependencies": {}
 }
