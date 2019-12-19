@@ -20,68 +20,7 @@
                 <button>Warenkorb</button>
             </div>
             <div class="shop">
-                <div class="products">
-                    <div>
-                        <figure>
-                            <img src="./img/appenzeller.jpg" alt="you gotta have alt text" />
-                            <figcaption>Image caption text here</figcaption>
-                        </figure>
-                    </div>
-                    <div>
-                        <figure>
-                            <img src="./img/eier.jpg" alt="you gotta have alt text" />
-                            <figcaption>Image caption text here</figcaption>
-                        </figure>
-                    </div>
-                    <div>
-                        <figure>
-                            <img src="./img/icedtea.jpg" alt="you gotta have alt text" />
-                            <figcaption>Image caption text here</figcaption>
-                        </figure>
-                    </div>
-                    <div>
-                        <figure>
-                            <img src="./img/kalbsbratwuerste.jpg" alt="you gotta have alt text" />
-                            <figcaption>Image caption text here</figcaption>
-                        </figure>
-                    </div>
-                    <div>
-                        <figure>
-                            <img src="./img/krustenkranz.jpg" alt="you gotta have alt text" />
-                            <figcaption>Image caption text here</figcaption>
-                        </figure>
-                    </div>
-                    <div>
-                        <figure>
-                            <img src="./img/nektarinen.jpg" alt="you gotta have alt text" />
-                            <figcaption>Image caption text here</figcaption>
-                        </figure>
-                    </div>
-                    <div>
-                        <figure>
-                            <img src="./img/olivenoel.jpg" alt="you gotta have alt text" />
-                            <figcaption>Image caption text here</figcaption>
-                        </figure>
-                    </div>
-                    <div>
-                        <figure>
-                            <img src="./img/senf.jpg" alt="you gotta have alt text" />
-                            <figcaption>Image caption text here</figcaption>
-                        </figure>
-                    </div>
-                    <div>
-                        <figure>
-                            <img src="./img/tomaten.jpg" alt="you gotta have alt text" />
-                            <figcaption>Image caption text here</figcaption>
-                        </figure>
-                    </div>
-                    <div>
-                        <figure>
-                            <img src="./img/vanille_glace.jpg" alt="you gotta have alt text" />
-                            <figcaption>Image caption text here</figcaption>
-                        </figure>
-                    </div>
-                </div>
+                <div class="products"></div>
             </div>
         </content>
         <footer>
@@ -89,6 +28,35 @@
             <p>&copy; 2019 BBZW M133, Levin Joller</p>
         </footer>
     </div>
+    <script>
+        fetch('http://localhost:8080/api/products')
+            .then(x => x.json())
+            .then(x => {
+                let shopArea = document.querySelector('.products');
+                let goods = "";
+                x.forEach(product => {
+                    goods += `
+                    <div>
+                        <figure>
+                            <img src="./img/${product.imageName}" alt="${product.productName}" />
+                            <figcaption>CHF ${product.specialOffer}
+                                <span>CHF ${product.normalPrice}</span>
+                            </figcaption>
+                        </figure>
+                    </div>`;
+                });
+                shopArea.innerHTML = goods;
+                return x;
+            })
+            .then(x => {
+                let tile = document.querySelectorAll('.products div');
+                for (let i = 0; i < tile.length; i++) {
+                    tile[i].addEventListener("click", function () {
+                        location.href = `http://localhost:8080/Details/${x[i].id}`;
+                    });
+                }
+            });
+    </script>
 </body>
 
 </html>

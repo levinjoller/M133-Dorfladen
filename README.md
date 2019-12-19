@@ -23,7 +23,6 @@ npm test
 
 ## VS Code
 ### Used Extentions
-* Used VS-Code Extentions
 * Mocha Test Explorer
 * Test Explorer UI
 * ESLint
