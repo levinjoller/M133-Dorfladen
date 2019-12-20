@@ -5,7 +5,7 @@ import { IProduct } from './IProduct';
 import products from './products.json';
 const app = express();
 const port = 8080;
-const assortment: IProduct[] = <IProduct[]>products;
+const assortment = <IProduct[]>products;
 
 app.use(express.static(__dirname + '/../views'));
 
@@ -24,11 +24,15 @@ app.get("/Checkout", (req, res) => {
 });
 
 app.get("/Details/:ID", (req, res) => {
-    res.send(req.params.ID);
+    res.sendFile(path.join(__dirname + '/../views/Details.html'));
 });
 
 app.get("/api/products", (req, res) => {
     res.json(assortment);
+});
+
+app.get('/api/product/:ID', (req, res) => {
+    res.json(assortment.find(x => x.id == parseInt(req.params.ID)));
 });
 
 app.listen(port, () => {

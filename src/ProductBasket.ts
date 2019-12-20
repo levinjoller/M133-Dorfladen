@@ -3,7 +3,7 @@ import products from "./products.json";
 
 export class ProductBasket {
     private goodsInBasket: IProduct[] = [];
-    private assortment: IProduct[] = <IProduct[]>products;
+    private assortment = <IProduct[]>products;
 
     public isEmpty(): boolean {
         return this.goodsInBasket.length == 0 ? true : false;
