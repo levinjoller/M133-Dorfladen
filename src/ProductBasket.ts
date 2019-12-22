@@ -28,7 +28,7 @@ export class ProductBasket {
         for (let i = 0; i < this.goodsInBasket.length; i++) {
             totalCost = totalCost + this.goodsInBasket[i].specialOffer;
         }
-        return totalCost;
+        return Math.round(totalCost * 20) / 20;
     }
 
     public getProductOccurence(ID: string): number {

@@ -48,6 +48,11 @@ app.get('/api/addproduct/:ID', (req, res) => {
     res.redirect('/');
 });
 
+app.get('/api/totalcost', (req, res) => {
+    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
+    res.json(basket.getTotalCost());
+});
+
 app.listen(port, () => {
     console.log(`server started: ${port}`);
 });
