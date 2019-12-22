@@ -11,7 +11,7 @@
   },
   "scripts": {
     "prestart": "tsc",
-    "start": "node dist/server.js",
+    "start": "node dist/src/server.js",
     "test": "mocha -r ts-node/register test/**/ProductBasket.tests.ts"
   },
   "repository": {

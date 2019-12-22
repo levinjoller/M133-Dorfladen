@@ -1,5 +1,5 @@
 import { IProduct } from "./IProduct";
-import products from "./products.json";
+import products from "../data/products.json";
 
 export class ProductBasket {
     private goodsInBasket: IProduct[] = [];

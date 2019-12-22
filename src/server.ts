@@ -3,12 +3,13 @@ import expressSession from 'express-session';
 import path from 'path';
 import { IProduct } from './IProduct';
 import { ProductBasket } from "./ProductBasket"
-import products from './products.json';
+import products from '../data/products.json';
 const app = express();
 const port = 8080;
+const publicDir = __dirname + '/../../views';
 const assortment = <IProduct[]>products;
 
-app.use(express.static(__dirname + '/../views'));
+app.use(express.static(publicDir));
 
 app.use(expressSession({
     secret: "I'%m23-o&uT",
@@ -21,15 +22,15 @@ app.get("/", (req, res) => {
 });
 
 app.get("/Checkout", (req, res) => {
-    res.sendFile(path.join(__dirname + '/../views/Checkout.html'));
+    res.sendFile(path.join(publicDir + '/Checkout.html'));
 });
 
 app.get("/Details/:ID", (req, res) => {
-    res.sendFile(path.join(__dirname + '/../views/Details.html'));
+    res.sendFile(path.join(publicDir + '/Details.html'));
 });
 
 app.get("/Warenkorb", (req, res) => {
-    res.sendFile(path.join(__dirname + '/../views/Warenkorb.html'));
+    res.sendFile(path.join(publicDir + '/Warenkorb.html'));
 });
 
 app.get("/api/products", (req, res) => {
