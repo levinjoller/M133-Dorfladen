@@ -41,7 +41,7 @@
                     <div>
                         <h2>${x.productName}</h2>
                         <p>${x.description}</p>
-                        <input type="submit" value="In den Warenkorb" onclick="window.location='/';" /> 
+                        <input type="submit" value="In den Warenkorb" onclick="window.location='http://localhost:8080/api/addproduct/${lastPartOfPath}';" /> 
                     </div>
                 `;
                 document.querySelector('.productdetails').innerHTML = content;

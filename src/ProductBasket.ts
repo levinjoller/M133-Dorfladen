@@ -5,15 +5,21 @@ export class ProductBasket {
     private goodsInBasket: IProduct[] = [];
     private assortment = <IProduct[]>products;
 
+    constructor(oldProductBasket?: ProductBasket) {
+        if (oldProductBasket != undefined) {
+            this.goodsInBasket = [...oldProductBasket.goodsInBasket];
+        }
+    }
+
     public isEmpty(): boolean {
         return this.goodsInBasket.length == 0 ? true : false;
     }
 
-    public addProductInBasket(ID: number) {
+    public addProductInBasket(ID: string) {
         this.goodsInBasket.push(this.assortment.find(x => x.id == ID));
     }
 
-    public pollProductFromBasket(ID: number) {
+    public pollProductFromBasket(ID: string) {
         this.goodsInBasket = this.goodsInBasket.filter(x => x.id != ID);
     }
 
@@ -25,7 +31,7 @@ export class ProductBasket {
         return totalCost;
     }
 
-    public getProductOccurence(ID: number): number {
+    public getProductOccurence(ID: string): number {
         return this.goodsInBasket.filter(x => x.id == ID).length;
     }
 }

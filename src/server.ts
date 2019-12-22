@@ -2,6 +2,7 @@ import express from 'express';
 import expressSession from 'express-session';
 import path from 'path';
 import { IProduct } from './IProduct';
+import { ProductBasket } from "./ProductBasket"
 import products from './products.json';
 const app = express();
 const port = 8080;
@@ -27,12 +28,23 @@ app.get("/Details/:ID", (req, res) => {
     res.sendFile(path.join(__dirname + '/../views/Details.html'));
 });
 
+app.get("/Warenkorb", (req, res) => {
+    res.sendFile(path.join(__dirname + '/../views/Warenkorb.html'));
+});
+
 app.get("/api/products", (req, res) => {
     res.json(assortment);
 });
 
 app.get('/api/product/:ID', (req, res) => {
-    res.json(assortment.find(x => x.id == parseInt(req.params.ID)));
+    res.json(assortment.find(x => x.id == req.params.ID));
+});
+
+app.get('/api/addproduct/:ID', (req, res) => {
+    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
+    basket.addProductInBasket(req.params.ID);
+    req.session.productbasket = basket;
+    res.redirect('/');
 });
 
 app.listen(port, () => {
