@@ -1,9 +1,7 @@
 import { IProduct } from "./IProduct";
-import products from "../data/products.json";
 
 export class ProductBasket {
     private goodsInBasket: IProduct[] = [];
-    private assortment = <IProduct[]>products;
 
     constructor(oldProductBasket?: ProductBasket) {
         if (oldProductBasket != undefined) {
@@ -11,27 +9,33 @@ export class ProductBasket {
         }
     }
 
-    public isEmpty(): boolean {
-        return this.goodsInBasket.length == 0 ? true : false;
+    public getProductsInBasket(): IProduct[] {
+        return this.goodsInBasket;
     }
 
-    public addProductInBasket(ID: string) {
-        this.goodsInBasket.push(this.assortment.find(x => x.id == ID));
+    public addProductToBasket(product: IProduct) {
+        let productInBasket = this.goodsInBasket.find(x => x.id == product.id);
+        if (!productInBasket) {
+            this.goodsInBasket.push(Object.assign(product, { quantity: 1 }));
+        } else {
+            productInBasket.quantity++;
+        }
     }
 
-    public pollProductFromBasket(ID: string) {
-        this.goodsInBasket = this.goodsInBasket.filter(x => x.id != ID);
+    public pollProductFromBasket(id: string) {
+        let productToPoll = this.goodsInBasket.find(x => x.id == id);
+        if (productToPoll.quantity > 1) {
+            productToPoll.quantity--;
+        } else {
+            this.goodsInBasket = this.goodsInBasket.filter(x => x.id != id);
+        }
     }
 
     public getTotalCost(): number {
         let totalCost = 0;
         for (let i = 0; i < this.goodsInBasket.length; i++) {
-            totalCost = totalCost + this.goodsInBasket[i].specialOffer;
+            totalCost = totalCost + this.goodsInBasket[i].specialOffer * this.goodsInBasket[i].quantity;
         }
         return Math.round(totalCost * 20) / 20;
-    }
-
-    public getProductOccurence(ID: string): number {
-        return this.goodsInBasket.filter(x => x.id == ID).length;
     }
 }

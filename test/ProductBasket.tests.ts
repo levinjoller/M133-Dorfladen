@@ -1,50 +1,58 @@
 import { expect } from "chai";
 import { ProductBasket } from "../src/ProductBasket";
+import products from '../data/products.json';
 
 describe("Village shop", () => {
     describe("Product basket", () => {
-        it("is empty", () => {
+        it("with no products, has a number of", () => {
             const testee = new ProductBasket();
-            const result = testee.isEmpty();
-            expect(result).to.equal(true);
+            const result = testee.getProductsInBasket().length;
+            expect(result).to.equal(0);
         });
-        it("with one product", () => {
+        it("with two equal and a different product, costs", () => {
             const testee = new ProductBasket();
-            testee.addProductInBasket("001");
-            const result = testee.isEmpty();
-            expect(result).to.equal(false);
-        });
-        it("with one product which gets deleted, is empty", () => {
-            const testee = new ProductBasket();
-            testee.addProductInBasket("003");
-            testee.pollProductFromBasket("003");
-            const result = testee.isEmpty();
-            expect(result).to.equal(true);
-        });
-        it("with three products, has price", () => {
-            const testee = new ProductBasket();
-            testee.addProductInBasket("001");
-            testee.addProductInBasket("003");
-            testee.addProductInBasket("005");
+            testee.addProductToBasket(products[1]);
+            testee.addProductToBasket(products[1]);
+            testee.addProductToBasket(products[4]);
             const result = testee.getTotalCost();
-            expect(result).to.equal(3.6 + 8.25 + 4.5);
+            expect(result).to.equal(2.65 * 2 + 4.5);
         });
-        it("with three products, where one gets deletet, has price", () => {
+        it("with one product, which get's deleted, has a number of objects", () => {
             const testee = new ProductBasket();
-            testee.addProductInBasket("001");
-            testee.addProductInBasket("003");
-            testee.addProductInBasket("005");
+            testee.addProductToBasket(products[2])
             testee.pollProductFromBasket("003");
-            const result = testee.getTotalCost();
-            expect(result).to.equal(3.6 + 0 + 4.5);
+            const result = testee.getProductsInBasket().length;
+            expect(result).to.equal(0);
         });
-        it("with a product that occurs twice, has occurrence", () => {
+        it("with three equal products, which one get's deleted, has quantity", () => {
             const testee = new ProductBasket();
-            testee.addProductInBasket("003");
-            testee.addProductInBasket("003");
-            testee.addProductInBasket("005");
-            const result = testee.getProductOccurence("003");
+            testee.addProductToBasket(products[2]);
+            testee.addProductToBasket(products[2]);
+            testee.addProductToBasket(products[2]);
+            testee.pollProductFromBasket("003");
+            const result = testee.getProductsInBasket()[0].quantity;
             expect(result).to.equal(2);
+        });
+        it("with three different products, which one get's deleted, costs", () => {
+            const testee = new ProductBasket();
+            testee.addProductToBasket(products[5]);
+            testee.addProductToBasket(products[1]);
+            testee.addProductToBasket(products[3]);
+            testee.pollProductFromBasket("002");
+            const result = testee.getTotalCost();
+            expect(result).to.equal(2 + 0 + 2.7);
+        });
+        it("with total mix of products, where two get's deleted, costs", () => {
+            const testee = new ProductBasket();
+            testee.addProductToBasket(products[5]);
+            testee.addProductToBasket(products[2]);
+            testee.addProductToBasket(products[3]);
+            testee.addProductToBasket(products[3]);
+            testee.addProductToBasket(products[2]);
+            testee.pollProductFromBasket("003");
+            testee.pollProductFromBasket("006");
+            const result = testee.getTotalCost();
+            expect(result).to.equal(2.7 * 2 + 8.25);
         });
     });
 });

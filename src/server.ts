@@ -43,7 +43,8 @@ app.get('/api/product/:ID', (req, res) => {
 
 app.get('/api/addproduct/:ID', (req, res) => {
     let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
-    basket.addProductInBasket(req.params.ID);
+    let product = assortment.find(x => x.id == req.params.ID);
+    basket.addProductToBasket(product);
     req.session.productbasket = basket;
     res.redirect('/');
 });
