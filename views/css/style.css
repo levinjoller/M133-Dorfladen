@@ -82,3 +82,65 @@ footer{
     width: 100%;
     height: auto;
 }
+
+#totalPreis{
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+table{
+    width: 100%;
+}
+
+thead{
+    text-align: left;
+    background-color: lightgray;
+}
+
+th, td {
+    height: 30px;
+    width: 25%;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+@media only screen and (max-width: 1200px) {
+    .wrapper{
+        margin: 0 20px 0 20px;
+        grid-template-areas: 
+        "header header header"
+        "content content content"
+        "footer footer footer";
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+    
+    thead{
+        display: none;
+    }
+
+    tr{
+        margin-bottom: 30px;
+    }
+
+    td{
+        width: 100%;
+    }
+    
+    td::before{
+        margin-right: 100px;
+        font-weight: bold;
+    }
+    
+    td:nth-of-type(1):before { content: "Produkt"; }
+    td:nth-of-type(2):before { content: "Einzelpreis"; }
+    td:nth-of-type(3):before { content: "Anzahl"; }
+    td:nth-of-type(4):before { content: "Total";}
+}

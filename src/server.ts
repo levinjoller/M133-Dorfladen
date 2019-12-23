@@ -41,17 +41,33 @@ app.get('/api/product/:ID', (req, res) => {
     res.json(assortment.find(x => x.id == req.params.ID));
 });
 
-app.get('/api/addproduct/:ID', (req, res) => {
+app.get('/api/addproduct/:ID/:warenkorb?', (req, res) => {
     let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
     let product = assortment.find(x => x.id == req.params.ID);
     basket.addProductToBasket(product);
     req.session.productbasket = basket;
-    res.redirect('/');
+    if (req.query.warenkorb) {
+        res.redirect('/Warenkorb');
+    } else {
+        res.redirect('/');
+    }
 });
 
 app.get('/api/totalcost', (req, res) => {
     let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
     res.json(basket.getTotalCost());
+});
+
+app.get('/api/basket', (req, res) => {
+    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
+    res.json(basket.getProductsInBasket());
+});
+
+app.get('/api/pollproduct/:ID', (req, res) => {
+    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
+    basket.pollProductFromBasket(req.params.ID);
+    req.session.productbasket = basket;
+    res.redirect('/Warenkorb');
 });
 
 app.listen(port, () => {

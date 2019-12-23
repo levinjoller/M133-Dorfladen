@@ -21,6 +21,20 @@
                 <button onclick="location.href='http://localhost:8080/Warenkorb'">Warenkorb</button>
             </div>
             <div class="shop">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Produkt</th>
+                            <th>Einzelpreis</th>
+                            <th>Anzahl</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <p id="totalPreis"></p>
+                <button onclick="location.href='http://localhost:8080/Checkout'">Zur Bestellung</button>
             </div>
         </content>
         <footer>
@@ -28,6 +42,38 @@
             <p>&copy; 2019 BBZW M133, Levin Joller</p>
         </footer>
     </div>
+    <script>
+        fetch('http://localhost:8080/api/basket')
+            .then(x => x.json())
+            .then(x => {
+                console.log(x);
+                let productTable = document.querySelector('.shop table tbody');
+                let productsInBasket = "";
+                x.forEach(product => {
+                    productsInBasket += `
+                        <tr>
+                            <td>
+                                <a href="http://localhost:8080/Details/${product.id}">${product.productName}</a>
+                            </td>
+                            <td>
+                                <button onclick="location.href='http://localhost:8080/api/pollproduct/${product.id}'">-</button>
+                                CHF ${product.specialOffer.toFixed(2)}
+                                <button onclick="location.href='http://localhost:8080/api/addproduct/${product.id}?warenkorb=true'">+</button>
+                            </td>
+                            <td>${product.quantity}</td>
+                            <td>CHF ${(product.quantity * product.specialOffer).toFixed(2)}</td>
+                        </tr>
+                    `;
+                });
+                productTable.innerHTML = productsInBasket;
+            });
+        fetch('http://localhost:8080/api/totalcost')
+            .then(x => x.json())
+            .then(x => {
+                let totalPreis = document.querySelector('#totalPreis');
+                totalPreis.innerHTML = `Total: CHF ${x.toFixed(2)}`;
+            });
+    </script>
 </body>
 
 </html>
