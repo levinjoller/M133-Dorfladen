@@ -6,6 +6,8 @@
 
 ## Getting Started
 ### Installation
+All the following commands must be executed in the command prompt in the project directory:
+
 First all dependencies have to be installed:
 ```
 npm install
@@ -19,6 +21,12 @@ npm start
 To run all unit-tests, the following command must be executed in the console:
 ```
 npm test
+```
+
+## Call up the application
+The following url must be called in the browser of your choice: 
+```
+http://localhost:8080
 ```
 
 ## VS Code

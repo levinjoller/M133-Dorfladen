@@ -1,6 +1,7 @@
 import express from 'express';
 import expressSession from 'express-session';
 import path from 'path';
+import bodyParser from 'body-parser';
 import { IProduct } from './IProduct';
 import { ProductBasket } from "./ProductBasket"
 import products from '../data/products.json';
@@ -10,7 +11,8 @@ const publicDir = __dirname + '/../../views';
 const assortment = <IProduct[]>products;
 
 app.use(express.static(publicDir));
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressSession({
     secret: "I'%m23-o&uT",
     resave: false,
@@ -68,6 +70,11 @@ app.get('/api/pollproduct/:ID', (req, res) => {
     basket.pollProductFromBasket(req.params.ID);
     req.session.productbasket = basket;
     res.redirect('/Warenkorb');
+});
+
+app.post('/api/orderform', (req, res) => {
+    req.session.productbasket = new ProductBasket();
+    res.redirect('/');
 });
 
 app.listen(port, () => {

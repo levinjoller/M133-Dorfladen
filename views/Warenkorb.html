@@ -46,7 +46,6 @@
         fetch('http://localhost:8080/api/basket')
             .then(x => x.json())
             .then(x => {
-                console.log(x);
                 let productTable = document.querySelector('.shop table tbody');
                 let productsInBasket = "";
                 x.forEach(product => {
