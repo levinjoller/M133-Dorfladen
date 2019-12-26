@@ -1,6 +1,7 @@
 import express from 'express';
 import expressSession from 'express-session';
 import path from 'path';
+import exphbs from 'express-handlebars';
 import bodyParser from 'body-parser';
 import { IProduct } from './IProduct';
 import { ProductBasket } from "./ProductBasket"
@@ -19,8 +20,16 @@ app.use(expressSession({
     saveUninitialized: true,
 }));
 
+app.engine('hbs', exphbs({ extname: 'hbs' }));
+app.set('view engine', 'hbs');
+
 app.get("/", (req, res) => {
-    res.render("Index");
+    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
+    res.render("Index", {
+        title: 'Produkteübersicht',
+        basketValue: basket.getTotalCost().toFixed(2),
+        assortment: assortment
+    });
 });
 
 app.get("/Checkout", (req, res) => {

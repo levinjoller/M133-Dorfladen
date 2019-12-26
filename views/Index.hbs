@@ -1,0 +1,14 @@
+<div class="products">
+  {{#each assortment}}
+  <div onclick="location.href='http://localhost:8080/Details/{{this.id}}'">
+    <figure>
+      <img src="./img/{{this.imageName}}" alt="{{this.productName}}" />
+      <figcaption>
+        <p>{{this.productName}}</p>
+        <p>CHF {{this.specialOffer}}
+          <span>CHF {{this.normalPrice}}</span></p>
+      </figcaption>
+    </figure>
+  </div>
+  {{/each}}
+</div>
