@@ -1,0 +1,29 @@
+<table>
+    <thead>
+        <tr>
+            <th>Produkt</th>
+            <th>Einzelpreis</th>
+            <th>Anzahl</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each goodsInBasket}}
+        <tr>
+            <td>
+                <a href="http://localhost:8080/Details/{{this.id}}">{{this.productName}}</a>
+            </td>
+            <td>
+                <button onclick="location.href='http://localhost:8080/api/pollproduct/{{this.id}}'">-</button>
+                CHF {{twoDecimals this.specialOffer}}
+                <button
+                    onclick="location.href='http://localhost:8080/api/addproduct/{{this.id}}?isWarenkorb=true'">+</button>
+            </td>
+            <td>{{this.quantity}}</td>
+            <td>CHF {{multiply this.quantity this.specialOffer}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<p id="totalPreis">Total: CHF {{twoDecimals basketValue}}</p>
+<button onclick="location.href='http://localhost:8080/Checkout'">Zur Bestellung</button>

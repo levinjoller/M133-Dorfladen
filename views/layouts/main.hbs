@@ -12,13 +12,13 @@
 <body>
     <div class="wrapper">
         <header>
-            <h1>M133 Dorfladen</h1>
+            <h1><a href="http://localhost:8080">M133 Dorfladen</a></h1>
             <hr>
         </header>
         <content>
             <div class="basket">
                 <button onclick="location.href='http://localhost:8080/Warenkorb'">Warenkorb: CHF
-                    {{basketValue}}</button>
+                    {{twoDecimals basketValue}}</button>
             </div>
             <div class="shop">
                 {{{body}}}
@@ -29,7 +29,6 @@
             <p>&copy; 2019 BBZW M133, Levin Joller</p>
         </footer>
     </div>
-
 </body>
 
 </html>

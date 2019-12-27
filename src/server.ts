@@ -1,6 +1,5 @@
 import express from 'express';
 import expressSession from 'express-session';
-import path from 'path';
 import exphbs from 'express-handlebars';
 import bodyParser from 'body-parser';
 import { IProduct } from './IProduct';
@@ -8,10 +7,16 @@ import { ProductBasket } from "./ProductBasket"
 import products from '../data/products.json';
 const app = express();
 const port = 8080;
-const publicDir = __dirname + '/../../views';
 const assortment = <IProduct[]>products;
+const hbs = exphbs.create({
+    extname: '.hbs',
+    helpers: {
+        multiply: function (factor_1: number, factor_2: number) { return (factor_1 * factor_2).toFixed(2); },
+        twoDecimals: function (price: number) { return price.toFixed(2); }
+    }
+});
 
-app.use(express.static(publicDir));
+app.use(express.static(__dirname + '/../../views'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressSession({
@@ -20,68 +25,64 @@ app.use(expressSession({
     saveUninitialized: true,
 }));
 
-app.engine('hbs', exphbs({ extname: 'hbs' }));
+app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 
 app.get("/", (req, res) => {
     let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
     res.render("Index", {
         title: 'Produkteübersicht',
-        basketValue: basket.getTotalCost().toFixed(2),
+        basketValue: basket.getTotalCost(),
         assortment: assortment
     });
 });
 
 app.get("/Checkout", (req, res) => {
-    res.sendFile(path.join(publicDir + '/Checkout.html'));
+    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
+    res.render('Checkout', {
+        title: 'Checkout',
+        basketValue: basket.getTotalCost()
+    });
 });
 
-app.get("/Details/:ID", (req, res) => {
-    res.sendFile(path.join(publicDir + '/Details.html'));
+app.get("/Details/:id", (req, res) => {
+    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
+    res.render('Details', {
+        title: 'Details',
+        basketValue: basket.getTotalCost(),
+        product: assortment.find(x => x.id == req.params.id)
+    });
 });
 
 app.get("/Warenkorb", (req, res) => {
-    res.sendFile(path.join(publicDir + '/Warenkorb.html'));
-});
-
-app.get("/api/products", (req, res) => {
-    res.json(assortment);
-});
-
-app.get('/api/product/:ID', (req, res) => {
-    res.json(assortment.find(x => x.id == req.params.ID));
-});
-
-app.get('/api/addproduct/:ID/:warenkorb?', (req, res) => {
     let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
-    let product = assortment.find(x => x.id == req.params.ID);
+    res.render('Warenkorb', {
+        title: 'Warenkorb',
+        goodsInBasket: basket.getProductsInBasket(),
+        basketValue: basket.getTotalCost()
+    });
+});
+
+app.get('/api/addproduct/:id/:isWarenkorb?', (req, res) => {
+    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
+    let product = assortment.find(x => x.id == req.params.id);
     basket.addProductToBasket(product);
     req.session.productbasket = basket;
-    if (req.query.warenkorb) {
+    if (req.query.isWarenkorb) {
         res.redirect('/Warenkorb');
     } else {
         res.redirect('/');
     }
 });
 
-app.get('/api/totalcost', (req, res) => {
+app.get('/api/pollproduct/:id', (req, res) => {
     let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
-    res.json(basket.getTotalCost());
-});
-
-app.get('/api/basket', (req, res) => {
-    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
-    res.json(basket.getProductsInBasket());
-});
-
-app.get('/api/pollproduct/:ID', (req, res) => {
-    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
-    basket.pollProductFromBasket(req.params.ID);
+    basket.pollProductFromBasket(req.params.id);
     req.session.productbasket = basket;
     res.redirect('/Warenkorb');
 });
 
-app.post('/api/orderform', (req, res) => {
+app.post('/api/order', (req, res) => {
     req.session.productbasket = new ProductBasket();
     res.redirect('/');
 });
