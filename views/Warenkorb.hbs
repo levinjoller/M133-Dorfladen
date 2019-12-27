@@ -15,12 +15,20 @@
             </td>
             <td>
                 <button onclick="location.href='http://localhost:8080/api/pollproduct/{{this.id}}'">-</button>
+                {{#if this.specialOffer}}
                 CHF {{twoDecimals this.specialOffer}}
+                {{else}}
+                CHF {{twoDecimals this.normalPrice}}
+                {{/if}}
                 <button
                     onclick="location.href='http://localhost:8080/api/addproduct/{{this.id}}?isWarenkorb=true'">+</button>
             </td>
             <td>{{this.quantity}}</td>
+            {{#if this.specialOffer}}
             <td>CHF {{multiply this.quantity this.specialOffer}}</td>
+            {{else}}
+            <td>CHF {{multiply this.quantity this.normalPrice}}</td>
+            {{/if}}
         </tr>
         {{/each}}
     </tbody>

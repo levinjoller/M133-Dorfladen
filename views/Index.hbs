@@ -5,8 +5,12 @@
             <img src="./img/{{this.imageName}}" alt="{{this.productName}}" />
             <figcaption>
                 <p>{{this.productName}}</p>
+                {{#if this.specialOffer}}
                 <p>CHF {{twoDecimals this.specialOffer}}
                     <span>CHF {{twoDecimals this.normalPrice}}</span></p>
+                {{else}}
+                <p>CHF {{twoDecimals this.normalPrice}}</p>
+                {{/if}}
             </figcaption>
         </figure>
     </div>

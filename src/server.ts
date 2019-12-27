@@ -9,7 +9,7 @@ const app = express();
 const port = 8080;
 const assortment = <IProduct[]>products;
 const hbs = exphbs.create({
-    extname: '.hbs',
+    extname: 'hbs',
     helpers: {
         multiply: function (factor_1: number, factor_2: number) { return (factor_1 * factor_2).toFixed(2); },
         twoDecimals: function (price: number) { return price.toFixed(2); }
