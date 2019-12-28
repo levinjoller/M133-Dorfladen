@@ -1,3 +1,12 @@
+{{#if showAlert}}
+{{#if isSuccess}}
+<script>
+    alert('Warenkorb wurde geleert');
+</script>
+{{else}}
+<script>alert('Falsche Eingabewerte')</script>
+{{/if}}
+{{/if}}
 <form action="http://localhost:8080/api/order" method="POST">
     <label for="firstname">Vorname</label>
     <input type="text" name="firstname" placeholder="Vorname" required />

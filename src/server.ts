@@ -1,6 +1,7 @@
 import express from 'express';
 import expressSession from 'express-session';
 import exphbs from 'express-handlebars';
+import { check, validationResult } from 'express-validator';
 import bodyParser from 'body-parser';
 import { IProduct } from './IProduct';
 import { ProductBasket } from "./ProductBasket"
@@ -82,9 +83,22 @@ app.get('/api/pollproduct/:id', (req, res) => {
     res.redirect('/Warenkorb');
 });
 
-app.post('/api/order', (req, res) => {
-    req.session.productbasket = new ProductBasket();
-    res.redirect('/');
+app.post('/api/order', [
+    check('firstname').isLength({ min: 1 }),
+    check('name').isLength({ min: 1 }),
+    check('mail').isEmail(),
+], (req, res) => {
+    const errors = validationResult(req);
+    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
+    if (errors.isEmpty()) {
+        req.session.productbasket = new ProductBasket();
+    }
+    res.render('Checkout', {
+        title: 'Checkout',
+        basketValue: basket.getTotalCost(),
+        showAlert: true,
+        isSuccess: errors.isEmpty() ? true : false,
+    });
 });
 
 app.listen(port, () => {
