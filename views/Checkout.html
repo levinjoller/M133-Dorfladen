@@ -21,12 +21,12 @@
                 <button onclick="location.href='http://localhost:8080/Warenkorb'">Warenkorb</button>
             </div>
             <div class="shop">
-                <form action="http://localhost:8080/api/orderform" method="POST">
+                <form action="http://localhost:8080/api/order" method="POST">
                     <label for="firstname">Vorname</label>
-                    <input type="text" name="firstname" placeholder="Vorname" pattern="^[^\d\W]*$" required />
+                    <input type="text" name="firstname" placeholder="Vorname" required />
                     <br>
                     <label for="name">Nachname</label>
-                    <input type="text" name="name" placeholder="Nachname" pattern="^[^\d\W]*$" required />
+                    <input type="text" name="name" placeholder="Nachname" required />
                     <br>
                     <label for="mail">Email-Adresse</label>
                     <input type="email" name="mail" placeholder="Email-Adresse" required />

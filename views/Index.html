@@ -37,27 +37,21 @@
                 let goods = "";
                 x.forEach(product => {
                     goods += `
-                    <div>
-                        <figure>
-                            <img src="./img/${product.imageName}" alt="${product.productName}" />
-                            <figcaption>
-                                <p>${product.productName}</p>
-                                <p>CHF ${product.specialOffer.toFixed(2)}
-                                <span>CHF ${product.normalPrice.toFixed(2)}</span></p>
-                            </figcaption>
-                        </figure>
-                    </div>`;
+                        <div onclick="location.href='http://localhost:8080/Details/${product.id}'">
+                            <figure>
+                                <img src="./img/${product.imageName}" alt="${product.productName}" />
+                                <figcaption>
+                                    <p>${product.productName}</p>
+                                    ${product.specialOffer ?
+                                        `<p>CHF ${product.specialOffer.toFixed(2)}
+                                            <span>CHF ${product.normalPrice.toFixed(2)}</span></p>` : 
+                                        `<p>CHF ${product.normalPrice.toFixed(2)}`}
+                                </figcaption>
+                            </figure>
+                        </div>`;
                 });
                 shopArea.innerHTML = goods;
                 return x;
-            })
-            .then(x => {
-                let tile = document.querySelectorAll('.products div');
-                for (let i = 0; i < tile.length; i++) {
-                    tile[i].addEventListener("click", function () {
-                        location.href = `http://localhost:8080/Details/${x[i].id}`;
-                    });
-                }
             });
     </script>
 </body>

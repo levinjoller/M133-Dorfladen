@@ -54,5 +54,13 @@ describe("Village shop", () => {
             const result = testee.getTotalCost();
             expect(result).to.equal(2.7 * 2 + 8.25);
         });
+        it("with one product, whitch has no specialOffer, costs", () => {
+            const testee = new ProductBasket();
+            let pricyProduct = products[4];
+            pricyProduct.specialOffer = null;
+            testee.addProductToBasket(pricyProduct);
+            const result = testee.getTotalCost();
+            expect(result).to.equal(5.4);
+        });
     });
 });

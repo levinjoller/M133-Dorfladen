@@ -27,7 +27,7 @@ app.get("/Checkout", (req, res) => {
     res.sendFile(path.join(publicDir + '/Checkout.html'));
 });
 
-app.get("/Details/:ID", (req, res) => {
+app.get("/Details/:id", (req, res) => {
     res.sendFile(path.join(publicDir + '/Details.html'));
 });
 
@@ -39,16 +39,16 @@ app.get("/api/products", (req, res) => {
     res.json(assortment);
 });
 
-app.get('/api/product/:ID', (req, res) => {
-    res.json(assortment.find(x => x.id == req.params.ID));
+app.get('/api/product/:id', (req, res) => {
+    res.json(assortment.find(x => x.id == req.params.id));
 });
 
-app.get('/api/addproduct/:ID/:warenkorb?', (req, res) => {
+app.get('/api/addproduct/:id/:isWarenkorb?', (req, res) => {
     let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
-    let product = assortment.find(x => x.id == req.params.ID);
+    let product = assortment.find(x => x.id == req.params.id);
     basket.addProductToBasket(product);
     req.session.productbasket = basket;
-    if (req.query.warenkorb) {
+    if (req.query.isWarenkorb) {
         res.redirect('/Warenkorb');
     } else {
         res.redirect('/');
@@ -65,14 +65,14 @@ app.get('/api/basket', (req, res) => {
     res.json(basket.getProductsInBasket());
 });
 
-app.get('/api/pollproduct/:ID', (req, res) => {
+app.get('/api/pollproduct/:id', (req, res) => {
     let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
-    basket.pollProductFromBasket(req.params.ID);
+    basket.pollProductFromBasket(req.params.id);
     req.session.productbasket = basket;
     res.redirect('/Warenkorb');
 });
 
-app.post('/api/orderform', (req, res) => {
+app.post('/api/order', (req, res) => {
     req.session.productbasket = new ProductBasket();
     res.redirect('/');
 });

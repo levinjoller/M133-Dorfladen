@@ -56,11 +56,11 @@
                             </td>
                             <td>
                                 <button onclick="location.href='http://localhost:8080/api/pollproduct/${product.id}'">-</button>
-                                CHF ${product.specialOffer.toFixed(2)}
-                                <button onclick="location.href='http://localhost:8080/api/addproduct/${product.id}?warenkorb=true'">+</button>
+                                CHF ${(product.specialOffer ? product.specialOffer : product.normalPrice).toFixed(2)}
+                                <button onclick="location.href='http://localhost:8080/api/addproduct/${product.id}?isWarenkorb=true'">+</button>
                             </td>
                             <td>${product.quantity}</td>
-                            <td>CHF ${(product.quantity * product.specialOffer).toFixed(2)}</td>
+                            <td>CHF ${(product.quantity * (product.specialOffer ? product.specialOffer : product.normalPrice)).toFixed(2)}</td>
                         </tr>
                     `;
                 });

@@ -2,10 +2,12 @@ import { IProduct } from "./IProduct";
 
 export class ProductBasket {
     private goodsInBasket: IProduct[] = [];
+    private totalCost: number = .00;
 
     constructor(oldProductBasket?: ProductBasket) {
         if (oldProductBasket != undefined) {
             this.goodsInBasket = [...oldProductBasket.goodsInBasket];
+            this.totalCost = oldProductBasket.totalCost;
         }
     }
 
@@ -20,6 +22,7 @@ export class ProductBasket {
         } else {
             productInBasket.quantity++;
         }
+        this.totalCost += product.specialOffer ? product.specialOffer : product.normalPrice;
     }
 
     public pollProductFromBasket(id: string) {
@@ -29,13 +32,10 @@ export class ProductBasket {
         } else {
             this.goodsInBasket = this.goodsInBasket.filter(x => x.id != id);
         }
+        this.totalCost -= productToPoll.specialOffer ? productToPoll.specialOffer : productToPoll.normalPrice;
     }
 
     public getTotalCost(): number {
-        let totalCost = 0;
-        for (let i = 0; i < this.goodsInBasket.length; i++) {
-            totalCost = totalCost + this.goodsInBasket[i].specialOffer * this.goodsInBasket[i].quantity;
-        }
-        return Math.round(totalCost * 20) / 20;
+        return Math.round(this.totalCost * 20) / 20;
     }
 }
