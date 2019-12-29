@@ -73,8 +73,27 @@ app.get('/api/pollproduct/:id', (req, res) => {
 });
 
 app.post('/api/order', (req, res) => {
-    req.session.productbasket = new ProductBasket();
-    res.redirect('/');
+    let mailPattern = /^\S+(\.\S+)?@\S+\.\S{2,3}$/;
+    let isValid = {
+        firstname: req.body.firstname ? true : false,
+        name: req.body.name ? true : false,
+        email: mailPattern.test(req.body.mail) ? true : false,
+    }
+    req.session.orderAlert = {
+        showAlert: true,
+        isSuccess: false
+    };
+    if (isValid.firstname && isValid.name && isValid.email) {
+        req.session.productbasket = new ProductBasket();
+        req.session.orderAlert.isSuccess = true;
+    }
+    res.redirect('/Checkout');
+});
+
+app.get('/api/getAlert', (req, res) => {
+    let orderAlert = req.session.orderAlert;
+    req.session.orderAlert = null;
+    res.json(orderAlert ? orderAlert : {});
 });
 
 app.listen(port, () => {
