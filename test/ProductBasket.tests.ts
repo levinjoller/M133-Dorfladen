@@ -13,7 +13,7 @@ describe("Village shop", () => {
             const testee = new ProductBasket();
             testee.addProductToBasket(products[1]);
             testee.addProductToBasket(products[1]);
-            testee.addProductToBasket(products[4]);
+            testee.addProductToBasket(products[5]);
             const result = testee.getTotalCost();
             expect(result).to.equal(2.65 * 2 + 4.5);
         });
@@ -35,7 +35,7 @@ describe("Village shop", () => {
         });
         it("with three different products, which one get's deleted, costs", () => {
             const testee = new ProductBasket();
-            testee.addProductToBasket(products[5]);
+            testee.addProductToBasket(products[6]);
             testee.addProductToBasket(products[1]);
             testee.addProductToBasket(products[3]);
             testee.pollProductFromBasket("002");
@@ -56,7 +56,7 @@ describe("Village shop", () => {
         });
         it("with one product, whitch has no specialOffer, costs", () => {
             const testee = new ProductBasket();
-            let pricyProduct = products[4];
+            let pricyProduct = products[5];
             pricyProduct.specialOffer = null;
             testee.addProductToBasket(pricyProduct);
             const result = testee.getTotalCost();

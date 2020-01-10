@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Produkteübersicht</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css" />
-    <script src="/js/get-basket-value.js"></script>
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css" />
+    <script src="/assets/basket_value.js"></script>
+    <script src="/assets/index.js"></script>
 </head>
 
 <body>
@@ -29,31 +30,6 @@
             <p>&copy; 2019 BBZW M133, Levin Joller</p>
         </footer>
     </div>
-    <script>
-        fetch('http://localhost:8080/api/products')
-            .then(x => x.json())
-            .then(x => {
-                let shopArea = document.querySelector('.products');
-                let goods = "";
-                x.forEach(product => {
-                    goods += `
-                        <div onclick="location.href='http://localhost:8080/Details/${product.id}'">
-                            <figure>
-                                <img src="./img/${product.imageName}" alt="${product.productName}" />
-                                <figcaption>
-                                    <p>${product.productName}</p>
-                                    ${product.specialOffer ?
-                                        `<p>CHF ${product.specialOffer.toFixed(2)}
-                                            <span>CHF ${product.normalPrice.toFixed(2)}</span></p>` : 
-                                        `<p>CHF ${product.normalPrice.toFixed(2)}`}
-                                </figcaption>
-                            </figure>
-                        </div>`;
-                });
-                shopArea.innerHTML = goods;
-                return x;
-            });
-    </script>
 </body>
 
 </html>

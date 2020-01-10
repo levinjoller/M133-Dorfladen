@@ -11,6 +11,7 @@ const publicDir = __dirname + '/../../views';
 const assortment = <IProduct[]>products;
 
 app.use(express.static(publicDir));
+app.use("/assets", express.static(path.join(__dirname + "/../views/assets")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressSession({
@@ -60,7 +61,7 @@ app.get('/api/totalcost', (req, res) => {
     res.json(basket.getTotalCost());
 });
 
-app.get('/api/basket', (req, res) => {
+app.get('/api/basketproducts', (req, res) => {
     let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
     res.json(basket.getProductsInBasket());
 });

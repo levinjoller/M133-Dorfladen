@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Checkout</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css" />
-    <script src="/js/get-basket-value.js"></script>
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css" />
+    <script src="/assets/basket_value.js"></script>
+    <script src="/assets/checkout.js"></script>
 </head>
 
 <body>
@@ -40,17 +41,6 @@
             <p>&copy; 2019 BBZW M133, Levin Joller</p>
         </footer>
     </div>
-    <script>
-        fetch('http://localhost:8080/api/getAlert')
-            .then(x => x.json())
-            .then(x => {
-                if (x.showAlert && x.isSuccess) {
-                    alert('Ihre Bestellung ist erfolgreich');
-                } else if (x.showAlert && !x.isSuccess) {
-                    alert('Fehlerhafte Eingabe');
-                }
-            });
-    </script>
 </body>
 
 </html>

@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Warenkorb</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css" />
-    <script src="/js/get-basket-value.js"></script>
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css" />
+    <script src="/assets/basket_value.js"></script>
+    <script src="/assets/warenkorb.js"></script>
 </head>
 
 <body>
@@ -42,37 +43,6 @@
             <p>&copy; 2019 BBZW M133, Levin Joller</p>
         </footer>
     </div>
-    <script>
-        fetch('http://localhost:8080/api/basket')
-            .then(x => x.json())
-            .then(x => {
-                let productTable = document.querySelector('.shop table tbody');
-                let productsInBasket = "";
-                x.forEach(product => {
-                    productsInBasket += `
-                        <tr>
-                            <td>
-                                <a href="http://localhost:8080/Details/${product.id}">${product.productName}</a>
-                            </td>
-                            <td>
-                                <button onclick="location.href='http://localhost:8080/api/pollproduct/${product.id}'">-</button>
-                                CHF ${(product.specialOffer ? product.specialOffer : product.normalPrice).toFixed(2)}
-                                <button onclick="location.href='http://localhost:8080/api/addproduct/${product.id}?isWarenkorb=true'">+</button>
-                            </td>
-                            <td>${product.quantity}</td>
-                            <td>CHF ${(product.quantity * (product.specialOffer ? product.specialOffer : product.normalPrice)).toFixed(2)}</td>
-                        </tr>
-                    `;
-                });
-                productTable.innerHTML = productsInBasket;
-            });
-        fetch('http://localhost:8080/api/totalcost')
-            .then(x => x.json())
-            .then(x => {
-                let totalPreis = document.querySelector('#totalPreis');
-                totalPreis.innerHTML = `Total: CHF ${x.toFixed(2)}`;
-            });
-    </script>
 </body>
 
 </html>

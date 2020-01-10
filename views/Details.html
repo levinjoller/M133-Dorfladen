@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Details</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css" />
-    <script src="/js/get-basket-value.js"></script>
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css" />
+    <script src="/assets/basket_value.js"></script>
+    <script src="/assets/details.js"></script>
 </head>
 
 <body>
@@ -29,25 +30,6 @@
             <p>&copy; 2019 BBZW M133, Levin Joller</p>
         </footer>
     </div>
-    <script>
-        let pathArray = window.location.pathname.split('/');
-        let lastPartOfPath = pathArray[pathArray.length - 1];
-        fetch(`http://localhost:8080/api/product/${lastPartOfPath}`)
-            .then(x => x.json())
-            .then(x => {
-                let content = `
-                    <div>
-                        <img src="/img/${x.imageName}" alt="${x.productName}" />
-                    </div>
-                    <div>
-                        <h2>${x.productName}</h2>
-                        <p>${x.description}</p>
-                        <input type="submit" value="In den Warenkorb" onclick="window.location='http://localhost:8080/api/addproduct/${lastPartOfPath}';" /> 
-                    </div>
-                `;
-                document.querySelector('.productdetails').innerHTML = content;
-            });
-    </script>
 </body>
 
 </html>
