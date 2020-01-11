@@ -45,7 +45,7 @@ app.get('/api/product/:id', (req, res) => {
 });
 
 app.get('/api/addproduct/:id/:isWarenkorb?', (req, res) => {
-    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
+    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : {});
     let product = assortment.find(x => x.id == req.params.id);
     basket.addProductToBasket(product);
     req.session.productbasket = basket;
@@ -57,17 +57,17 @@ app.get('/api/addproduct/:id/:isWarenkorb?', (req, res) => {
 });
 
 app.get('/api/totalcost', (req, res) => {
-    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
+    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : {});
     res.json(basket.getTotalCost());
 });
 
 app.get('/api/basketproducts', (req, res) => {
-    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
+    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : {});
     res.json(basket.getProductsInBasket());
 });
 
 app.get('/api/pollproduct/:id', (req, res) => {
-    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
+    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : {});
     basket.pollProductFromBasket(req.params.id);
     req.session.productbasket = basket;
     res.redirect('/Warenkorb');

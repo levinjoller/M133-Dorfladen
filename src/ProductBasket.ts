@@ -1,38 +1,38 @@
 import { IProduct } from "./IProduct";
 
 export class ProductBasket {
-    private goodsInBasket: IProduct[] = [];
+    private products: IProduct[] = [];
     private totalCost: number = .00;
 
-    constructor(oldProductBasket?: ProductBasket) {
-        if (oldProductBasket != undefined) {
-            this.goodsInBasket = [...oldProductBasket.goodsInBasket];
-            this.totalCost = oldProductBasket.totalCost;
+    constructor(oldBasket?: ProductBasket) {
+        if (oldBasket && Object.entries(oldBasket).length) {
+            this.products = [...oldBasket.products];
+            this.totalCost = oldBasket.totalCost;
         }
     }
 
     public getProductsInBasket(): IProduct[] {
-        return this.goodsInBasket;
+        return this.products;
     }
 
-    public addProductToBasket(product: IProduct) {
-        let productInBasket = this.goodsInBasket.find(x => x.id == product.id);
-        if (!productInBasket) {
-            this.goodsInBasket.push(Object.assign(product, { quantity: 1 }));
+    public addProductToBasket(newProduct: IProduct) {
+        let product = this.products.find(p => p.id == newProduct.id);
+        if (!product) {
+            this.products.push(Object.assign(newProduct, { quantity: 1 }));
         } else {
-            productInBasket.quantity++;
+            product.quantity++;
         }
-        this.totalCost += product.specialOffer ? product.specialOffer : product.normalPrice;
+        this.totalCost += newProduct.specialOffer ? newProduct.specialOffer : newProduct.normalPrice;
     }
 
     public pollProductFromBasket(id: string) {
-        let productToPoll = this.goodsInBasket.find(x => x.id == id);
-        if (productToPoll.quantity > 1) {
-            productToPoll.quantity--;
+        let pollProduct = this.products.find(p => p.id == id);
+        if (pollProduct.quantity > 1) {
+            pollProduct.quantity--;
         } else {
-            this.goodsInBasket = this.goodsInBasket.filter(x => x.id != id);
+            this.products = this.products.filter(p => p.id != id);
         }
-        this.totalCost -= productToPoll.specialOffer ? productToPoll.specialOffer : productToPoll.normalPrice;
+        this.totalCost -= pollProduct.specialOffer ? pollProduct.specialOffer : pollProduct.normalPrice;
     }
 
     public getTotalCost(): number {

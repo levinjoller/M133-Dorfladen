@@ -46,7 +46,7 @@ footer{
 
 .products > div{
 	min-width: 200px;
-    min-height: 270px;
+    min-height: auto;
     border: 1px solid black;
     display: table;
 }

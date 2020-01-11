@@ -8,7 +8,7 @@ fetch('http://localhost:8080/api/products')
             goods += `
             <div onclick="location.href='http://localhost:8080/Details/${product.id}'">
                 <figure>
-                    <img src="./img/${product.imageName}" alt="${product.productName}" />
+                    <img src="/assets/img/${product.imageName}" alt="${product.productName}" />
                     <figcaption>
                         <p>${product.productName}</p>
                         ${product.specialOffer ?
