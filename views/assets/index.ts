@@ -1,12 +1,12 @@
 import { IProduct } from '../../src/IProduct';
 
-fetch('http://localhost:8080/api/products')
+fetch('/api/products')
     .then(r => r.json())
     .then((products: IProduct[]) => {
-        let goods = "";
+        let shop = "";
         products.forEach(product => {
-            goods += `
-            <div onclick="location.href='http://localhost:8080/Details/${product.id}'">
+            shop += `
+            <div onclick="location.href='/Details/${product.id}'">
                 <figure>
                     <img src="/assets/img/${product.imageName}" alt="${product.productName}" />
                     <figcaption>
@@ -19,5 +19,5 @@ fetch('http://localhost:8080/api/products')
                 </figure>
             </div>`;
         });
-        document.querySelector('.products').innerHTML = goods;
+        document.querySelector('.products').innerHTML = shop;
     });

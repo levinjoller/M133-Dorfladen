@@ -1,19 +1,20 @@
 import { IProduct } from '../../src/IProduct';
+import { Cart } from '../../src/Cart';
 
-fetch('http://localhost:8080/api/basketproducts')
+fetch('/api/basketproducts')
     .then(r => r.json())
-    .then(basketProducts => {
+    .then((cart: Cart) => {
         let orderList = "";
-        basketProducts.forEach((product: IProduct) => {
+        cart.products.forEach((product: IProduct) => {
             orderList += `
             <tr>
                 <td>
-                    <a href="http://localhost:8080/Details/${product.id}">${product.productName}</a>
+                    <a href="/Details/${product.id}">${product.productName}</a>
                 </td>
                 <td>
-                    <button onclick="location.href='http://localhost:8080/api/pollproduct/${product.id}'">-</button>
+                    <button onclick="location.href='/api/pollproduct/${product.id}'">-</button>
                     CHF ${(product.specialOffer ? product.specialOffer : product.normalPrice).toFixed(2)}
-                    <button onclick="location.href='http://localhost:8080/api/addproduct/${product.id}?isWarenkorb=true'">+</button>
+                    <button onclick="location.href='/api/addproduct/${product.id}?isWarenkorb=true'">+</button>
                 </td>
                 <td>${product.quantity}</td>
                 <td>CHF ${(product.quantity * (product.specialOffer ? product.specialOffer : product.normalPrice)).toFixed(2)}</td>
@@ -21,9 +22,5 @@ fetch('http://localhost:8080/api/basketproducts')
         `;
         });
         document.querySelector('.shop table tbody').innerHTML = orderList;
-    });
-fetch('http://localhost:8080/api/totalcost')
-    .then(r => r.json())
-    .then(totalcost => {
-        document.querySelector('#totalPreis').innerHTML = `Total: CHF ${totalcost.toFixed(2)}`;
+        document.querySelector('#totalPreis').innerHTML = `Total: CHF ${cart.totalCost.toFixed(2)}`;
     });

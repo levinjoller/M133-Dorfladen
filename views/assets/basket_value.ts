@@ -1,4 +1,4 @@
-fetch('http://localhost:8080/api/totalcost')
+fetch('/api/totalcost')
     .then(r => r.json())
     .then((totalcost: number) => {
         let basketbtn = document.querySelector('.basket button');

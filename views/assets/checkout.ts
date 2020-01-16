@@ -1,4 +1,4 @@
-fetch('http://localhost:8080/api/getAlert')
+fetch('/api/getAlert')
     .then(r => r.json())
     .then(getAlert => {
         if (getAlert.showAlert && getAlert.isSuccess) {
