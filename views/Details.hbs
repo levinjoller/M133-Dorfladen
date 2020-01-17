@@ -1,11 +1,10 @@
 <div class="productdetails">
     <div>
-        <img src="/img/{{product.imageName}}" alt="{{product.productName}}" />
+        <img src="/assets/img/{{product.imageName}}" alt="{{product.productName}}" />
     </div>
     <div>
         <h2>{{product.productName}}</h2>
         <p>{{product.description}}</p>
-        <input type="submit" value="In den Warenkorb"
-            onclick="window.location='http://localhost:8080/api/addproduct/{{product.id}}'" />
+        <input type="submit" value="In den Warenkorb" onclick="window.location='/api/addproduct/{{product.id}}'" />
     </div>
 </div>

@@ -1,8 +1,8 @@
 <div class="products">
     {{#each assortment}}
-    <div onclick="location.href='http://localhost:8080/Details/{{this.id}}'">
+    <div onclick="location.href='/Details/{{this.id}}'">
         <figure>
-            <img src="./img/{{this.imageName}}" alt="{{this.productName}}" />
+            <img src="./assets/img/{{this.imageName}}" alt="{{this.productName}}" />
             <figcaption>
                 <p>{{this.productName}}</p>
                 {{#if this.specialOffer}}

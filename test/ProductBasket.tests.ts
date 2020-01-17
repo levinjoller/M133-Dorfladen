@@ -1,65 +1,78 @@
 import { expect } from "chai";
-import { ProductBasket } from "../src/ProductBasket";
+import { Cart, addProductToCart, pollProductFromCart } from "../src/Cart";
 import products from '../data/products.json';
 
 describe("Village shop", () => {
-    describe("Product basket", () => {
+    describe("Cart", () => {
+        it("which a product is added, has a number of products", () => {
+            let cart = new Cart();
+            cart = addProductToCart(cart, products[1]);
+            const result = cart.products.length;
+            expect(result).to.equal(1);
+        });
+        it("which a product is added and deleted, has a number of products", () => {
+            let cart = new Cart();
+            cart = addProductToCart(cart, products[1]);
+            cart = pollProductFromCart(cart, "002");
+            const result = cart.products.length;
+            expect(result).to.equal(0);
+        });
         it("with no products, has a number of", () => {
-            const testee = new ProductBasket();
-            const result = testee.getProductsInBasket().length;
+            let cart = new Cart();
+            const result = cart.products.length;
             expect(result).to.equal(0);
         });
         it("with two equal and a different product, costs", () => {
-            const testee = new ProductBasket();
-            testee.addProductToBasket(products[1]);
-            testee.addProductToBasket(products[1]);
-            testee.addProductToBasket(products[4]);
-            const result = testee.getTotalCost();
+            let cart = new Cart();
+            cart = addProductToCart(cart, products[1]);
+            cart = addProductToCart(cart, products[1]);
+            cart = addProductToCart(cart, products[5]);
+            const result = cart.totalCost;
             expect(result).to.equal(2.65 * 2 + 4.5);
         });
         it("with one product, which get's deleted, has a number of objects", () => {
-            const testee = new ProductBasket();
-            testee.addProductToBasket(products[2])
-            testee.pollProductFromBasket("003");
-            const result = testee.getProductsInBasket().length;
+            let cart = new Cart();
+            cart = addProductToCart(cart, products[2])
+            cart = pollProductFromCart(cart, "003");
+            const result = cart.products.length;
             expect(result).to.equal(0);
         });
         it("with three equal products, which one get's deleted, has quantity", () => {
-            const testee = new ProductBasket();
-            testee.addProductToBasket(products[2]);
-            testee.addProductToBasket(products[2]);
-            testee.addProductToBasket(products[2]);
-            testee.pollProductFromBasket("003");
-            const result = testee.getProductsInBasket()[0].quantity;
+            let cart = new Cart();
+            cart = addProductToCart(cart, products[2]);
+            cart = addProductToCart(cart, products[2]);
+            cart = addProductToCart(cart, products[2]);
+            cart = pollProductFromCart(cart, "003");
+            const result = cart.products[0].quantity;
             expect(result).to.equal(2);
         });
         it("with three different products, which one get's deleted, costs", () => {
-            const testee = new ProductBasket();
-            testee.addProductToBasket(products[5]);
-            testee.addProductToBasket(products[1]);
-            testee.addProductToBasket(products[3]);
-            testee.pollProductFromBasket("002");
-            const result = testee.getTotalCost();
+            let cart = new Cart();
+            cart = addProductToCart(cart, products[6]);
+            cart = addProductToCart(cart, products[1]);
+            cart = addProductToCart(cart, products[3]);
+            cart = pollProductFromCart(cart, "002");
+            const result = cart.totalCost;
             expect(result).to.equal(2 + 0 + 2.7);
         });
         it("with total mix of products, where two get's deleted, costs", () => {
-            const testee = new ProductBasket();
-            testee.addProductToBasket(products[5]);
-            testee.addProductToBasket(products[2]);
-            testee.addProductToBasket(products[3]);
-            testee.addProductToBasket(products[3]);
-            testee.addProductToBasket(products[2]);
-            testee.pollProductFromBasket("003");
-            testee.pollProductFromBasket("006");
-            const result = testee.getTotalCost();
+            let cart = new Cart();
+            cart = addProductToCart(cart, products[5]);
+            cart = addProductToCart(cart, products[2]);
+            cart = addProductToCart(cart, products[3]);
+            cart = addProductToCart(cart, products[3]);
+            cart = addProductToCart(cart, products[2]);
+            cart = pollProductFromCart(cart, "003");
+            cart = pollProductFromCart(cart, "006");
+            const result = cart.totalCost
             expect(result).to.equal(2.7 * 2 + 8.25);
         });
         it("with one product, whitch has no specialOffer, costs", () => {
-            const testee = new ProductBasket();
-            let pricyProduct = products[4];
+            let cart = new Cart();
+            let pricyProduct = products[5];
             pricyProduct.specialOffer = null;
-            testee.addProductToBasket(pricyProduct);
-            const result = testee.getTotalCost();
+            cart = addProductToCart(cart, pricyProduct);
+            const result = cart.totalCost;
             expect(result).to.equal(5.4);
         });
     });

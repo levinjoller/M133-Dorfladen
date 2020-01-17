@@ -6,19 +6,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css" />
+    <script src="/assets/cart_value.js"></script>
 </head>
 
 <body>
     <div class="wrapper">
         <header>
-            <h1><a href="http://localhost:8080">M133 Dorfladen</a></h1>
+            <h1><a href="/">M133 Dorfladen</a></h1>
             <hr>
         </header>
         <content>
             <div class="basket">
-                <button onclick="location.href='http://localhost:8080/Warenkorb'">Warenkorb: CHF
-                    {{twoDecimals basketValue}}</button>
+                <button onclick="location.href='/Warenkorb'">Warenkorb: CHF <span></span></button>
             </div>
             <div class="shop">
                 {{{body}}}

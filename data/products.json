@@ -33,6 +33,14 @@
     },
     {
         "id": "005",
+        "productName": "Blumenkohl",
+        "specialOffer": null,
+        "normalPrice": 3.4,
+        "imageName": "blumenkohl.jpg",
+        "description": "In einem Kopf zusammenstehenden Blütensprossen, die als Gemüse gegessen werden."
+    },
+    {
+        "id": "006",
         "productName": "Eier",
         "specialOffer": 4.5,
         "normalPrice": 5.4,
@@ -40,7 +48,7 @@
         "description": "9 Schweizer Eier aus Frilandhaltung"
     },
     {
-        "id": "006",
+        "id": "007",
         "productName": "Krustenkranz",
         "specialOffer": 2,
         "normalPrice": 2.3,
@@ -48,7 +56,7 @@
         "description": "Terra Suisse"
     },
     {
-        "id": "007",
+        "id": "008",
         "productName": "Magunm Almond",
         "specialOffer": 7.9,
         "normalPrice": 9.9,
@@ -56,7 +64,7 @@
         "description": "Vanilleglace und Milchschokolade mit Mandeln"
     },
     {
-        "id": "008",
+        "id": "009",
         "productName": "Iced Green Tea",
         "specialOffer": 7.5,
         "normalPrice": 10.8,
@@ -64,7 +72,7 @@
         "description": "AriZona Green Tea - Grünteegrtränk"
     },
     {
-        "id": "009",
+        "id": "010",
         "productName": "Senf",
         "specialOffer": 2.7,
         "normalPrice": 3.4,
@@ -72,7 +80,7 @@
         "description": "Senf mild"
     },
     {
-        "id": "010",
+        "id": "011",
         "productName": "Olivenöl",
         "specialOffer": 14.35,
         "normalPrice": 17.95,

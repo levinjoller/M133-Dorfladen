@@ -4,7 +4,7 @@ import exphbs from 'express-handlebars';
 import { check, validationResult } from 'express-validator';
 import bodyParser from 'body-parser';
 import { IProduct } from './IProduct';
-import { ProductBasket } from "./ProductBasket"
+import { Cart, addProductToCart, pollProductFromCart } from "./Cart";
 import products from '../data/products.json';
 const app = express();
 const port = 8080;
@@ -18,6 +18,7 @@ const hbs = exphbs.create({
 });
 
 app.use(express.static(__dirname + '/../../views'));
+app.use("/assets", express.static(__dirname + "/../views/assets"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressSession({
@@ -29,57 +30,47 @@ app.use(expressSession({
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 
-app.get("/", (req, res) => {
-    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
+app.get("/", (_req, res) => {
     res.render("Index", {
         title: 'Produkteübersicht',
-        basketValue: basket.getTotalCost(),
         assortment: assortment
     });
 });
 
-app.get("/Checkout", (req, res) => {
-    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
+app.get("/Checkout", (_req, res) => {
     res.render('Checkout', {
-        title: 'Checkout',
-        basketValue: basket.getTotalCost()
+        title: 'Checkout'
     });
 });
 
 app.get("/Details/:id", (req, res) => {
-    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
     res.render('Details', {
         title: 'Details',
-        basketValue: basket.getTotalCost(),
         product: assortment.find(x => x.id == req.params.id)
     });
 });
 
 app.get("/Warenkorb", (req, res) => {
-    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
+    let cart = req.session.cart ? req.session.cart : new Cart();
     res.render('Warenkorb', {
         title: 'Warenkorb',
-        goodsInBasket: basket.getProductsInBasket(),
-        basketValue: basket.getTotalCost()
+        products: cart.products,
+        totalCost: cart.totalCost
     });
 });
 
 app.get('/api/addproduct/:id/:isWarenkorb?', (req, res) => {
-    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
     let product = assortment.find(x => x.id == req.params.id);
-    basket.addProductToBasket(product);
-    req.session.productbasket = basket;
-    if (req.query.isWarenkorb) {
-        res.redirect('/Warenkorb');
-    } else {
-        res.redirect('/');
+    if (product) {
+        let cart = req.session.cart ? req.session.cart : new Cart();
+        req.session.cart = addProductToCart(cart, product);
     }
+    req.query.isWarenkorb ? res.redirect('/Warenkorb') : res.redirect(`/Details/${req.params.id}`);
 });
 
 app.get('/api/pollproduct/:id', (req, res) => {
-    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
-    basket.pollProductFromBasket(req.params.id);
-    req.session.productbasket = basket;
+    let cart = req.session.cart ? req.session.cart : new Cart();
+    req.session.cart = pollProductFromCart(cart, req.params.id);
     res.redirect('/Warenkorb');
 });
 
@@ -89,16 +80,19 @@ app.post('/api/order', [
     check('mail').isEmail(),
 ], (req, res) => {
     const errors = validationResult(req);
-    let basket = new ProductBasket(req.session.productbasket ? req.session.productbasket : undefined);
     if (errors.isEmpty()) {
-        req.session.productbasket = new ProductBasket();
+        req.session.cart = new Cart();
     }
     res.render('Checkout', {
         title: 'Checkout',
-        basketValue: basket.getTotalCost(),
         showAlert: true,
-        isSuccess: errors.isEmpty() ? true : false,
+        isSuccess: errors.isEmpty(),
     });
+});
+
+app.get('/api/cart', (req, res) => {
+    let cart = req.session.cart ? req.session.cart : new Cart();
+    res.json(cart);
 });
 
 app.listen(port, () => {
