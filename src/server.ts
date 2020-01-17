@@ -4,7 +4,7 @@ import exphbs from 'express-handlebars';
 import { check, validationResult } from 'express-validator';
 import bodyParser from 'body-parser';
 import { IProduct } from './IProduct';
-import { Cart, addProductToCart, pollProductFromCart } from "./Cart";
+import { Cart, addProductToCart, pollProductFromCart } from './Cart';
 import products from '../data/products.json';
 const app = express();
 const port = 8080;
@@ -18,7 +18,7 @@ const hbs = exphbs.create({
 });
 
 app.use(express.static(__dirname + '/../../views'));
-app.use("/assets", express.static(__dirname + "/../views/assets"));
+app.use("/assets", express.static(__dirname + '/../views/assets'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressSession({
@@ -30,27 +30,27 @@ app.use(expressSession({
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 
-app.get("/", (_req, res) => {
+app.get('/', (_req, res) => {
     res.render("Index", {
         title: 'Produkteübersicht',
         assortment: assortment
     });
 });
 
-app.get("/Checkout", (_req, res) => {
+app.get('/Checkout', (_req, res) => {
     res.render('Checkout', {
         title: 'Checkout'
     });
 });
 
-app.get("/Details/:id", (req, res) => {
+app.get('/Details/:id', (req, res) => {
     res.render('Details', {
         title: 'Details',
         product: assortment.find(x => x.id == req.params.id)
     });
 });
 
-app.get("/Warenkorb", (req, res) => {
+app.get('/Warenkorb', (req, res) => {
     let cart = req.session.cart ? req.session.cart : new Cart();
     res.render('Warenkorb', {
         title: 'Warenkorb',

@@ -2,7 +2,7 @@ import path from 'path';
 
 module.exports = {
     entry: './views/assets/cart_value.ts',
-    mode: "none",
+    mode: 'none',
     module: {
         rules: [
             {

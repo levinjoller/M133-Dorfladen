@@ -1,10 +1,10 @@
 {{#if showAlert}}
 {{#if isSuccess}}
 <script>
-    alert('Ihre Bestellung war erfolgreich.');
+    alert("Ihre Bestellung war erfolgreich.");
 </script>
 {{else}}
-<script>alert('Bestellung fehlgeschlagen: \nFehlerhafte Eingabe!')</script>
+<script>alert("Bestellung fehlgeschlagen: \nFehlerhafte Eingabe!")</script>
 {{/if}}
 {{/if}}
 <form action="/api/order" method="POST">

@@ -1,14 +1,15 @@
-import { expect } from "chai";
-import { Cart, addProductToCart, pollProductFromCart } from "../src/Cart";
+import { expect } from 'chai';
+import { Cart, addProductToCart, pollProductFromCart } from '../src/Cart';
 import products from '../data/products.json';
 
 describe("Village shop", () => {
     describe("Cart", () => {
-        it("which a product is added, has a number of products", () => {
+        it("with one product, which get's deleted, has a number of objects", () => {
             let cart = new Cart();
-            cart = addProductToCart(cart, products[1]);
+            cart = addProductToCart(cart, products[2])
+            cart = pollProductFromCart(cart, "003");
             const result = cart.products.length;
-            expect(result).to.equal(1);
+            expect(result).to.equal(0);
         });
         it("which a product is added and deleted, has a number of products", () => {
             let cart = new Cart();
@@ -29,13 +30,6 @@ describe("Village shop", () => {
             cart = addProductToCart(cart, products[5]);
             const result = cart.totalCost;
             expect(result).to.equal(2.65 * 2 + 4.5);
-        });
-        it("with one product, which get's deleted, has a number of objects", () => {
-            let cart = new Cart();
-            cart = addProductToCart(cart, products[2])
-            cart = pollProductFromCart(cart, "003");
-            const result = cart.products.length;
-            expect(result).to.equal(0);
         });
         it("with three equal products, which one get's deleted, has quantity", () => {
             let cart = new Cart();
