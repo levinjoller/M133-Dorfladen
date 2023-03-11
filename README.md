@@ -41,3 +41,7 @@ The following url must be called in the browser of your choice:
 
 ## Author
 * **Levin Joller**
+
+## DEPRECATED
+This project is no longer in development.
+It fulfilled its purpose as an exercise.
